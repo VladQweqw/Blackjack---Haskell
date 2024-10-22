@@ -71,10 +71,12 @@ isGameOver playerDeck robotDeck isStay
     | isStay && playerSum > robotSum = "Player wins"
     | isStay && playerSum < robotSum = "Robot wins"
     | isStay && playerSum == robotSum = "DRAW"
+
+    | playerSum > 21 && robotSum > 21 = "DRAW"
     | playerSum >= 21 = "Robot wins"
     | robotSum >= 21 = "Player wins"
-    | playerSum == 21 = "Player wins"
-    | robotSum == 21 = "Robot wins"
+    | playerSum == 21 = "Player wins with 21"
+    | robotSum == 21 = "Robot wins with 21"
     | otherwise = "Game continues"
     where
         playerSum = calculateDeck playerDeck
@@ -99,18 +101,17 @@ whileLoop playerCards robotCards gameOver
                 let newRobotCards = robotCards ++ [robotNewCard]
 
                 let gameStatus = isGameOver newPlayerCards newRobotCards False
-
                 
                 if gameStatus == "Game continues" then do
                     displayDecks newPlayerCards newRobotCards False
                     whileLoop newPlayerCards newRobotCards False
                 else do
                     displayDecks newPlayerCards newRobotCards True
-                    fancyPrintGameStatus gameStatus
+                    fancyPrintGameStatus gameStatus;
             else do
                 displayDecks playerCards robotCards True
                 fancyPrintGameStatus (isGameOver playerCards robotCards True)
-                
+
 
 
 startGame :: IO ()
