@@ -2,8 +2,7 @@ import System.Random (randomRIO)
 import Data.List (intercalate)
 import Text.Read (readMaybe)
 
-cards :: [String] = ["Ace", "2", "3"]
--- cards :: [String] = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "K", "Q", "J"]
+cards :: [String] = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "K", "Q", "J"]
 
 main :: IO ()
 main = do
@@ -28,9 +27,8 @@ getCard isPlayer deckSum = do
     rng <- getRNG (length cards - 1)
     let rngCard = cards !! rng
 
-    print (rngCard, isPlayer, deckSum)
     if rngCard == "Ace" then do
-        
+
         if isPlayer then do
             putStrLn "!!!! You got an Ace, keep it 11 [PRESS ENTER] or change it to 1 [TYPE ANYTHING]? !!!!"
 
@@ -63,9 +61,15 @@ getCard isPlayer deckSum = do
 
 getInitialDeck :: Bool -> Int -> IO [String]
 getInitialDeck isPlayer deckSum= do
-    firstCard <- getCard isPlayer deckSum
-    secondCard <- getCard isPlayer 1001
-    return [firstCard, secondCard]
+    if deckSum == 1001 then do -- IF the robot got 2 aces, 1 will be 11 another one will be 1, in order to not lose instaltenly
+        firstCard <- getCard isPlayer 0
+        secondCard <- getCard isPlayer 11
+        return [firstCard, secondCard]
+    else do
+        firstCard <- getCard isPlayer deckSum
+        secondCard <- getCard isPlayer deckSum
+        return [firstCard, secondCard]
+
 
 displayDecks :: [String] -> [String] -> Bool -> IO ()
 displayDecks playerDeck robotDeck showRobot = do
@@ -147,7 +151,7 @@ whileLoop playerCards robotCards gameOver
 startGame :: IO ()
 startGame = do
     playerCards <- getInitialDeck True 0
-    robotCards <- getInitialDeck False 0
+    robotCards <- getInitialDeck False 1001
 
     displayDecks playerCards robotCards False
     whileLoop playerCards robotCards False
