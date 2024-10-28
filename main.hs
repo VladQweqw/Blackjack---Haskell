@@ -80,7 +80,7 @@ displayDecks playerDeck dealerDeck showRobot = do
     -- The "" after the () refers to the inital value of the accumulator, in this case I want it to be a string to append to it and have spaces
     -- playerDeck is the array I'm looping over                   
     -- keep in mind card / acc are just variable names
-    putStr playerConcat -- print the playerContac which is a string
+    putStr (playerConcat ++ " " ++ "(Total: " ++ show(calculateDeck playerDeck) ++ ")") -- print the playerContac which is a string
 
     if showRobot then do -- now we want to check who's cards we are displaying, if is the user we don't have any restrictions, if it's the dealer we have to hide the first element, in this case is a ?
         putStr "\n| Dealer's deck: " -- this is used when the game ends, we want to show all the cards 
@@ -89,7 +89,7 @@ displayDecks playerDeck dealerDeck showRobot = do
     else do
         putStr "\n| Dealer's deck: ? " -- display when the game is playing
         let dealerConcat = foldr (\card acc -> card ++ " " ++ acc) "" (tail dealerDeck) -- tail -> primeste o lista si returneaza lista fara primul element, ( exact ce ne trebuie pe scurt)
-        putStr dealerConcat
+        putStr (dealerConcat ++ "(Total: " ++ show(calculateDeck (tail dealerDeck)) ++ ")")
 
     putStr "\n+-----------------------+"
     putStr "\n>>> [ENTER] Hit | [TYPE ANYTHING] Stay\n" -- UI&UX
