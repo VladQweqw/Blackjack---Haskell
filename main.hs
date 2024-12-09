@@ -89,7 +89,7 @@ displayDecks playerDeck dealerDeck showRobot = do
     else do
         putStr "\n| Dealer's deck: ? " -- display when the game is playing
         let dealerConcat = foldr (\card acc -> card ++ " " ++ acc) "" (tail dealerDeck) -- tail -> primeste o lista si returneaza lista fara primul element, ( exact ce ne trebuie pe scurt)
-        putStr (dealerConcat ++ "(Total: " ++ show(calculateDeck (tail dealerDeck)) ++ ")")
+        putStr (dealerConcat ++ "(Total: " ++ show(calculateDeck (tail dealerDeck)) ++ ")") -- UI impovements, automatically calculates the deck
 
     putStr "\n+-----------------------+"
     putStr "\n>>> [ENTER] Hit | [TYPE ANYTHING] Stay\n" -- UI&UX
