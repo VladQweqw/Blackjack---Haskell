@@ -1,7 +1,7 @@
 # Blackjack game using Haskell 
 
 1. Coded by [Vlad Poienariu](https://vladpoienariu.netlify.app/)
-2. Linkdein [Vlad Poienariu](https://www.linkedin.com/in/vlad-poienariu-0a79a721a/)
+2. Linkedin [Vlad Poienariu](https://www.linkedin.com/in/vlad-poienariu-0a79a721a/)
 3. Repository URL: [Repo here](https://github.com/VladQweqw/Blackjack---Haskell)
 4. Rules link: [Rules here](https://www.wikihow.com/Play-Blackjack#videotranscript)
 ***
