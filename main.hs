@@ -50,6 +50,7 @@ getCard cards isPlayer deckSum = do -- variable naming
                 else do
                     putStrLn "The dealer choose the Ace to be 11"
                     return "Ace"
+
     else
         return rngCard -- if the card is not an ace, simple, just return it
 
@@ -57,11 +58,15 @@ getInitialDeck :: [String] -> Bool -> Int -> IO [String] -- this function is use
 getInitialDeck cards isPlayer deckSum = do
     if deckSum == 1001 then do -- IF the dealer got 2 aces, 1 will be 11 another one will be 1, in order to not lose instaltenly, 1001 is the discriminator between user and dealer, if decksum is 1001 which is impossible in a normal gameplay, we know it's the dealer
         firstCard <- getCard cards isPlayer 0 -- first deck value will be 0 because in case there is an Ace, we want it to be 11
-        secondCard <- getCard cards isPlayer 11 -- the second deck value will be 11, because if there happens to be 2 aces, we want the second one to be 1, total to be 12 not 22 to lose
+        let new_cards = removeFirstCard cards;
+        
+        secondCard <- getCard new_cards isPlayer 11 -- the second deck value will be 11, because if there happens to be 2 aces, we want the second one to be 1, total to be 12 not 22 to lose
         return [firstCard, secondCard] -- return the cards
     else do
         firstCard <- getCard cards isPlayer deckSum -- same thing but pass the deckSum parameter, not an absolute value
-        secondCard <- getCard cards isPlayer deckSum
+        let new_cards = removeFirstCard cards;
+
+        secondCard <- getCard new_cards isPlayer deckSum
         return [firstCard, secondCard]
 
 displayDecks :: [String] -> [String] -> Bool -> IO () -- get 2 string arrays ( decks ) and a bool, then return some prints so we use io()
@@ -154,6 +159,9 @@ startGame :: IO () -- this is the "main" function, the function that starts the 
 startGame = do
     -- we use cards that are shuffled
     cards :: [String] <- shuffleCards all_cards
+    cards :: [String] <- shuffleCards cards
+
+    print cards
 
     playerCards <- getInitialDeck cards True 0 -- we initialize the user cards and dealers
     let new_cards = removeFirstCard cards -- store new cards
